@@ -88,7 +88,6 @@ def check_date(s_year, s_month, s_day, s_hour, s_minute, e_year, e_month, e_day,
 
 # 主界面
 class MyLegendWidget(QWidget):
-    seek = pyqtSignal(str)
 
     def __init__(self, parent=None):
         super(MyLegendWidget, self).__init__(parent)
@@ -269,7 +268,6 @@ class MyLegendWidget(QWidget):
         spline2 = QSplineSeries()
         spline2.setName("最低温度")
         self.current_value = self.spinbox.value()
-        print(self.current_value)
         if self.current_value == self.total:
             self.start = len(self.x_data) // 100 * 100
             self.end = self.start + len(self.x_data) % 100
@@ -311,6 +309,7 @@ class MyLegendWidget(QWidget):
         if len(self.x_data) < 100:
             self.start = 0
             self.end = len(self.x_data)
+            self.button.setText("生成曲线")
         else:
             self.start = 0
             self.end = 100
@@ -353,12 +352,10 @@ class MyLegendWidget(QWidget):
         self.button.setText("翻页查看数据")
 
         self.spinbox.setMinimum(1)
-        print(self.x_data)
         if len(self.x_data) % 100 != 0:
             self.total = int(len(self.x_data) / 100) + 1
         else:
             self.total = int(len(self.x_data) / 100)
-        print(self.total)
         self.spinbox.setMaximum(self.total)
         self.label11.setText("总共" + str(self.total) + "页")
         self.spinbox.setValue(1)
